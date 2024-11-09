@@ -11,7 +11,7 @@ class Kustomer extends CI_Controller
     public function index()
     {
         $data = array(
-            'title' => 'View Data Kustomer',
+            'title' => 'Kustomer',
             'userlog' => infoLogin(),
             'kustomer' => $this->Kustomer_model->getAll(),
             'content' => 'kustomer/index'
@@ -22,7 +22,7 @@ class Kustomer extends CI_Controller
     public function add()
     {
         $data = array(
-            'title' => 'Tambah Data Kustomer',
+            'title' => 'Tambah Kategori',
             'content' => 'kustomer/add_form'
         );
         $this->load->view('template/main', $data);
@@ -32,16 +32,7 @@ class Kustomer extends CI_Controller
     {
         $this->Kustomer_model->save();
         if ($this->db->affected_rows() > 0) {
-            $this->session->set_flashdata("success", "Data Kustomer Berhasil DiSimpan");
-        }
-        redirect('kustomer');
-    }
-
-    public function edit()
-    {
-        $this->Kustomer_model->editData();
-        if ($this->db->affected_rows() > 0) {
-            $this->session->set_flashdata("success", "Data kustomer Berhasil Diupdate");
+            $this->session->set_flashdata('success', 'Data berhasil disimpan');
         }
         redirect('kustomer');
     }
@@ -56,11 +47,27 @@ class Kustomer extends CI_Controller
         $this->load->view('template/main', $data);
     }
 
+    public function edit()
+    {
+        $this->Kustomer_model->editData();
+        if ($this->db->affected_rows() > 0) {
+            $this->session->set_flashdata('success', 'Data berhasil diubah');
+        }
+        redirect('kustomer');
+    }
 
-    function delete($id)
+    public function delete($id)
     {
         $this->Kustomer_model->delete($id);
         redirect('kustomer');
     }
 
+    public function laporan()
+    {
+        $data = array(
+            'title' => 'Laporan Data kustomer',
+            'content' => 'kustomer/laporan'
+        );
+        $this->load->view('template/main', $data);
+    }
 }
